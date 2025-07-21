@@ -68,16 +68,23 @@ function DoctorsPage() {
 
                 {/* Contact Info */}
                 <div className="divider"></div>
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-base-content/80 mb-3">Contact Information</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-sm text-base-content/70">
-                      <span className="w-5 h-5 mr-3 text-primary">Phone:</span>
-                      {doctor.phone}
+                <div className="grid grid-cols-2 gap-4 p-4 bg-base-200/50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <span className="text-xl text-primary">📞</span>
                     </div>
-                    <div className="flex items-center text-sm text-base-content/70">
-                      <span className="w-5 h-5 mr-3 text-primary">Email:</span>
-                      {doctor.email}
+                    <div>
+                      <p className="text-xs text-base-content/60 font-medium">Phone</p>
+                      <p className="text-sm font-semibold">{doctor.phone}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                      <span className="text-xl text-secondary">✉️</span>
+                    </div>
+                    <div>
+                      <p className="text-xs text-base-content/60 font-medium">Email</p>
+                      <p className="text-sm font-semibold">{doctor.email}</p>
                     </div>
                   </div>
                 </div>

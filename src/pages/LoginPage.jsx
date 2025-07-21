@@ -63,88 +63,102 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md space-y-8">
+    <div className="min-h-screen bg-base-200 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="h-16 w-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="mx-auto h-16 w-16 bg-primary rounded-full flex items-center justify-center mb-4">
             <span className="text-primary-content text-2xl">🏥</span>
           </div>
-          <h2 className="text-3xl font-bold mb-2">Patient Login</h2>
-          <p className="text-base-content/70">Access your ClinicCare dashboard</p>
+          <h2 className="text-3xl font-bold text-base-content mb-2">
+            Patient Login
+          </h2>
+          <p className="text-base-content/70">
+            Access your ClinicCare patient dashboard
+          </p>
         </div>
 
-        {/* Login Form */}
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
+        {/* Enhanced Login Form */}
+        <div className="card bg-base-100 shadow-2xl border border-base-300">
+          <div className="card-body p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {errors.general && (
-                <div className="alert alert-error">
-                  <span>{errors.general}</span>
+                <div className="alert alert-error shadow-lg">
+                  <div>
+                    <span className="text-lg mr-2">⚠️</span>
+                    <span>{errors.general}</span>
+                  </div>
                 </div>
               )}
 
               <div className="form-control">
-                <label className="label">
+                <label className="label" htmlFor="phone">
                   <span className="label-text">Phone Number</span>
                 </label>
                 <input
+                  id="phone"
                   name="phone"
                   type="tel"
                   value={loginData.phone}
                   onChange={handleInputChange}
-                  className={`input input-bordered w-full ${errors.phone ? 'input-error' : ''}`}
-                  placeholder="Registered phone number"
+                  className={`input input-bordered ${errors.phone ? 'input-error' : ''}`}
+                  placeholder="Enter your registered phone number"
                 />
                 {errors.phone && (
                   <span className="label-text-alt text-error">{errors.phone}</span>
                 )}
               </div>
 
+              {/* OR Divider */}
               <div className="divider">OR</div>
 
               <div className="form-control">
-                <label className="label">
+                <label className="label" htmlFor="email">
                   <span className="label-text">Email Address</span>
                 </label>
                 <input
+                  id="email"
                   name="email"
                   type="email"
                   value={loginData.email}
                   onChange={handleInputChange}
-                  className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
-                  placeholder="Registered email address"
+                  className={`input input-bordered ${errors.email ? 'input-error' : ''}`}
+                  placeholder="Enter your registered email address"
                 />
                 {errors.email && (
                   <span className="label-text-alt text-error">{errors.email}</span>
                 )}
               </div>
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className={`btn btn-primary w-full ${isLoading ? 'loading' : ''}`}
-              >
-                {isLoading ? 'Logging in...' : 'Login to Dashboard'}
-              </button>
+              {/* Submit Button */}
+              <div className="form-control mt-6">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`btn btn-primary ${isLoading ? 'loading' : ''}`}
+                >
+                  {isLoading ? 'Logging in...' : 'Login to Dashboard'}
+                </button>
+              </div>
             </form>
 
+            {/* Footer Links */}
             <div className="divider"></div>
             <div className="text-center space-y-2">
               <p className="text-sm text-base-content/70">
                 Don't have an account?{' '}
                 <button
                   onClick={() => navigate('/register')}
-                  className="link link-primary"
+                  className="link link-primary font-medium hover:text-primary/80 transition-colors"
                 >
                   Register as new patient
                 </button>
               </p>
-              <p className="text-sm text-base-content/70">
+              <p className="text-base-content/70">
                 Need help?{' '}
                 <button
                   onClick={() => navigate('/contact')}
-                  className="link link-primary"
+                  className="link link-primary font-medium hover:text-primary/80 transition-colors"
                 >
                   Contact support
                 </button>
@@ -153,16 +167,13 @@ function LoginPage() {
           </div>
         </div>
 
+        {/* Demo Credentials */}
         <div className="alert alert-warning">
           <div>
             <h3 className="font-medium">Demo Credentials:</h3>
             <div className="text-sm space-y-1 mt-2">
-              <p>
-                <strong>Phone:</strong> 9876543210
-              </p>
-              <p>
-                <strong>Email:</strong> rohan.sharma@example.com
-              </p>
+              <p><strong>Phone:</strong> 9876543210</p>
+              <p><strong>Email:</strong> rohan.sharma@example.com</p>
               <p className="opacity-70 mt-2">Use these credentials to test the login functionality</p>
             </div>
           </div>

@@ -57,52 +57,105 @@ function EmergencyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200">
+    <div className="min-h-screen bg-error/10">
+      {/* Emergency Header */}
       <div className="bg-error text-error-content">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <span className="text-4xl mr-4">🚨</span>
+              <span className="text-5xl mr-4">🚨</span>
               <div>
                 <h1 className="text-3xl font-bold">Emergency Services</h1>
-                <p className="opacity-80">24/7 Emergency Care Available</p>
+                <p className="text-error-content/80">24/7 Emergency Care Available</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-sm opacity-80">Emergency Hotline</p>
+              <p className="text-error-content/80 text-sm">Emergency Hotline</p>
               <p className="text-2xl font-bold">108</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Quick Emergency Call */}
         <div className="card bg-base-100 shadow-xl mb-8 border-l-4 border-error">
           <div className="card-body">
-            <h2 className="card-title text-2xl">Quick Emergency Action</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              {emergencyContacts.map((contact, idx) => (
+            <h2 className="card-title text-2xl text-base-content mb-4">
+              Quick Emergency Action
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {emergencyContacts.map((contact, index) => (
                 <button
                   key={idx}
                   onClick={() => handleEmergencyCall(contact.number)}
                   disabled={isCallInitiated}
-                  className={`btn btn-outline btn-error h-auto py-4 ${isCallInitiated ? 'btn-disabled' : ''}`}
+                  className={`btn btn-outline btn-error ${isCallInitiated ? 'btn-disabled' : ''}`}
                 >
                   <div className="text-center">
-                    <p className="font-semibold text-sm">{contact.name}</p>
-                    <p className="text-2xl font-bold my-1">{contact.number}</p>
-                    <p className="text-xs opacity-70">{contact.type}</p>
+                    <p className="font-semibold">{contact.name}</p>
+                    <p className="text-2xl font-bold">{contact.number}</p>
+                    <p className="text-sm opacity-70">{contact.type}</p>
                   </div>
                 </button>
               ))}
             </div>
             {isCallInitiated && (
-              <div className="mt-4 text-center">
-                <span className="loading loading-spinner loading-md text-error mr-2"></span>
-                <span className="text-error">Initiating emergency call...</span>
+              <div className="mt-6 text-center bg-error/10 p-4 rounded-lg">
+                <span className="loading loading-dots loading-lg text-error"></span>
+                <p className="text-error font-bold mt-2">Connecting to Emergency Services...</p>
               </div>
             )}
           </div>
+        </div>
+
+        {/* Emergency Type Selection */}
+        <div className="card bg-base-100 shadow-xl mb-8">
+          <div className="card-body p-6">
+            <h2 className="text-2xl font-bold text-base-content mb-6 flex items-center">
+              <span className="text-3xl mr-3">🎯</span>
+              Select Emergency Type
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {emergencyTypes.map((type, index) => (
+                <button
+                  key={index}
+                  onClick={() => setEmergencyType(type.value)}
+                  className={`btn btn-lg h-auto py-4 ${
+                    emergencyType === type.value
+                    ? 'btn-primary shadow-lg'
+                    : 'btn-ghost hover:bg-base-200'
+                  }`}
+                >
+                  <div className="text-center">
+                    <span className="text-3xl mb-2">{type.icon}</span>
+                    <p className="font-bold">{type.label}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* First Aid Instructions */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {firstAidTips.map((tip, index) => (
+            <div key={index} className="card bg-base-100 shadow-xl">
+              <div className="card-body p-6">
+                <h3 className="card-title text-lg font-bold text-error mb-4">
+                  {tip.condition}
+                </h3>
+                <ul className="space-y-3">
+                  {tip.steps.map((step, stepIndex) => (
+                    <li key={stepIndex} className="flex items-start">
+                      <span className="font-bold mr-2">{stepIndex + 1}.</span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
         </div>
 
         {isLoggedIn && (
@@ -198,7 +251,8 @@ function EmergencyPage() {
           <div>
             <h3 className="font-medium">Important Disclaimer</h3>
             <p className="text-sm mt-1">
-              This page provides general emergency guidance only. Always call your local emergency services in a real emergency. Do not delay professional medical help.
+              This page provides general emergency guidance only. In case of a real emergency, 
+              always call your local emergency services immediately. Do not delay seeking professional medical help.
             </p>
           </div>
         </div>
@@ -208,3 +262,4 @@ function EmergencyPage() {
 }
 
 export default EmergencyPage;
+        
