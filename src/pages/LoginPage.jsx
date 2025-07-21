@@ -7,171 +7,128 @@ function LoginPage() {
   const navigate = useNavigate();
   const { patients } = usePatientStore();
   const { login } = useAuthStore();
-  
-  const [loginData, setLoginData] = useState({
-    phone: '',
-    email: ''
-  });
-  
+
+  const [loginData, setLoginData] = useState({ phone: '', email: '' });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLoginData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Clear errors when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
+    setLoginData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
     if (!loginData.phone && !loginData.email) {
       newErrors.general = 'Please enter either phone number or email address';
     }
-    
     if (loginData.phone && !/^\d{10}$/.test(loginData.phone.replace(/\D/g, ''))) {
       newErrors.phone = 'Please enter a valid 10-digit phone number';
     }
-    
     if (loginData.email && !/\S+@\S+\.\S+/.test(loginData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
+    if (!validateForm()) return;
     setIsLoading(true);
-    
-    // Simulate loading time
+
     setTimeout(() => {
-      // Find patient by phone or email
-      const patient = patients.find(p => 
-        (loginData.phone && p.contactInfo.phone === loginData.phone) ||
-        (loginData.email && p.contactInfo.email === loginData.email)
+      const patient = patients.find(
+        (p) =>
+          (loginData.phone && p.contactInfo.phone === loginData.phone) ||
+          (loginData.email && p.contactInfo.email === loginData.email)
       );
-      
       if (patient) {
-        // Update auth store with patient data
-        const userData = {
+        login({
           id: patient.id,
           name: patient.name,
           email: patient.contactInfo.email,
           phone: patient.contactInfo.phone
-        };
-        
-        login(userData);
+        });
         navigate('/patient-dashboard');
       } else {
-        setErrors({ general: 'No patient found with these credentials. Please check your information or register as a new patient.' });
+        setErrors({
+          general:
+            'No patient found with these credentials. Please check your information or register as a new patient.'
+        });
       }
-      
       setIsLoading(false);
     }, 1000);
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-base-200 flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto h-16 w-16 bg-primary rounded-full flex items-center justify-center mb-4">
+          <div className="h-16 w-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-primary-content text-2xl">🏥</span>
           </div>
-          <h2 className="text-3xl font-bold text-base-content mb-2">
-            Patient Login
-          </h2>
-          <p className="text-base-content/70">
-            Access your ClinicCare patient dashboard
-          </p>
+          <h2 className="text-3xl font-bold mb-2">Patient Login</h2>
+          <p className="text-base-content/70">Access your ClinicCare dashboard</p>
         </div>
 
         {/* Login Form */}
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* General Error */}
               {errors.general && (
                 <div className="alert alert-error">
                   <span>{errors.general}</span>
                 </div>
               )}
 
-              {/* Phone Number */}
               <div className="form-control">
-                <label className="label" htmlFor="phone">
+                <label className="label">
                   <span className="label-text">Phone Number</span>
                 </label>
                 <input
-                  id="phone"
                   name="phone"
                   type="tel"
                   value={loginData.phone}
                   onChange={handleInputChange}
-                  className={`input input-bordered ${errors.phone ? 'input-error' : ''}`}
-                  placeholder="Enter your registered phone number"
+                  className={`input input-bordered w-full ${errors.phone ? 'input-error' : ''}`}
+                  placeholder="Registered phone number"
                 />
                 {errors.phone && (
-                  <label className="label">
-                    <span className="label-text-alt text-error">{errors.phone}</span>
-                  </label>
+                  <span className="label-text-alt text-error">{errors.phone}</span>
                 )}
               </div>
 
-              {/* OR Divider */}
               <div className="divider">OR</div>
 
-              {/* Email */}
               <div className="form-control">
-                <label className="label" htmlFor="email">
+                <label className="label">
                   <span className="label-text">Email Address</span>
                 </label>
                 <input
-                  id="email"
                   name="email"
                   type="email"
                   value={loginData.email}
                   onChange={handleInputChange}
-                  className={`input input-bordered ${errors.email ? 'input-error' : ''}`}
-                  placeholder="Enter your registered email address"
+                  className={`input input-bordered w-full ${errors.email ? 'input-error' : ''}`}
+                  placeholder="Registered email address"
                 />
                 {errors.email && (
-                  <label className="label">
-                    <span className="label-text-alt text-error">{errors.email}</span>
-                  </label>
+                  <span className="label-text-alt text-error">{errors.email}</span>
                 )}
               </div>
 
-              {/* Submit Button */}
-              <div className="form-control mt-6">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`btn btn-primary ${isLoading ? 'loading' : ''}`}
-                >
-                  {isLoading ? 'Logging in...' : 'Login to Dashboard'}
-                </button>
-              </div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`btn btn-primary w-full ${isLoading ? 'loading' : ''}`}
+              >
+                {isLoading ? 'Logging in...' : 'Login to Dashboard'}
+              </button>
             </form>
 
-            {/* Footer Links */}
             <div className="divider"></div>
             <div className="text-center space-y-2">
               <p className="text-sm text-base-content/70">
@@ -196,13 +153,16 @@ function LoginPage() {
           </div>
         </div>
 
-        {/* Demo Credentials */}
         <div className="alert alert-warning">
           <div>
             <h3 className="font-medium">Demo Credentials:</h3>
             <div className="text-sm space-y-1 mt-2">
-              <p><strong>Phone:</strong> 9876543210</p>
-              <p><strong>Email:</strong> rohan.sharma@example.com</p>
+              <p>
+                <strong>Phone:</strong> 9876543210
+              </p>
+              <p>
+                <strong>Email:</strong> rohan.sharma@example.com
+              </p>
               <p className="opacity-70 mt-2">Use these credentials to test the login functionality</p>
             </div>
           </div>
@@ -211,6 +171,5 @@ function LoginPage() {
     </div>
   );
 }
-
 
 export default LoginPage;

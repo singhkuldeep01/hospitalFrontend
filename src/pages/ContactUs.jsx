@@ -59,7 +59,7 @@ function ContactUs() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="input input-bordered"
+                    className="input input-bordered w-full"
                     required
                   />
                 </div>
@@ -73,7 +73,7 @@ function ContactUs() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="input input-bordered"
+                    className="input input-bordered w-full"
                     required
                   />
                 </div>
@@ -87,7 +87,7 @@ function ContactUs() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="input input-bordered"
+                    className="input input-bordered w-full"
                     required
                   />
                 </div>
@@ -100,7 +100,7 @@ function ContactUs() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    className="textarea textarea-bordered h-32"
+                    className="textarea textarea-bordered w-full h-32"
                     required
                   />
                 </div>
@@ -153,4 +153,3 @@ function ContactUs() {
 }
 
 export default ContactUs;
-                 

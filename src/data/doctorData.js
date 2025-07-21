@@ -1,55 +1,64 @@
 const doctorData = [
-    {
-        id: 1,
-        name: "Dr. Rajesh Sharma",
-        specialization: "General Physician",
-        experience: 10, // years
-        qualifications: ["MBBS", "MD (Internal Medicine)"],
-        contactInfo: {
-            phone: "9876543211",
-            email: "rajesh.sharma@clinic.com"
-        },
-        availability: [
-            { day: "Monday", time: "09:00 AM - 01:00 PM" },
-            { day: "Wednesday", time: "09:00 AM - 01:00 PM" },
-            { day: "Friday", time: "09:00 AM - 01:00 PM" },
-        ],
-        consultationFee: 500 // in INR
-    },
-    {
-        id: 2,
-        name: "Dr. Neha Mehta",
-        specialization: "ENT Specialist",
-        experience: 7, // years
-        qualifications: ["MBBS", "MS (ENT)"],
-        contactInfo: {
-            phone: "9123456780",
-            email: "neha.mehta@clinic.com"
-        },
-        availability: [
-            { day: "Tuesday", time: "10:00 AM - 02:00 PM" },
-            { day: "Thursday", time: "10:00 AM - 02:00 PM" },
-            { day: "Saturday", time: "10:00 AM - 01:00 PM" },
-        ],
-        consultationFee: 600 // in INR
-    },
-    {
-        id: 3,
-        name: "Dr. Amitabh Singh",
-        specialization: "Diabetologist",
-        experience: 12, // years
-        qualifications: ["MBBS", "MD (Endocrinology)"],
-        contactInfo: {
-            phone: "9345678901",
-            email: "amitabh.singh@clinic.com"
-        },
-        availability: [
-            { day: "Monday", time: "02:00 PM - 06:00 PM" },
-            { day: "Wednesday", time: "02:00 PM - 06:00 PM" },
-            { day: "Friday", time: "02:00 PM - 06:00 PM" },
-        ],
-        consultationFee: 700 // in INR
-    }
+  { 
+    id: 1, 
+    name: 'Dr. Sharma', 
+    specialization: 'General Medicine', 
+    experience: '15 years',
+    education: 'MBBS, MD Internal Medicine',
+    phone: '9876543210',
+    email: 'dr.sharma@cliniccare.com',
+    available: true,
+    about: 'Dr. Sharma is an experienced general physician with expertise in preventive care and chronic disease management. He believes in personalized treatment and patient education.',
+    languages: ['English', 'Hindi', 'Marathi']
+  },
+  { 
+    id: 2, 
+    name: 'Dr. Mehta', 
+    specialization: 'Cardiology', 
+    experience: '12 years',
+    education: 'MBBS, MD Cardiology, DM',
+    phone: '9876543211',
+    email: 'dr.mehta@cliniccare.com',
+    available: true,
+    about: 'Dr. Mehta is a renowned cardiologist specializing in interventional cardiology and heart disease prevention. She has performed over 1000 successful cardiac procedures.',
+    languages: ['English', 'Hindi', 'Gujarati']
+  },
+  { 
+    id: 3, 
+    name: 'Dr. Smith', 
+    specialization: 'Orthopedics', 
+    experience: '10 years',
+    education: 'MBBS, MS Orthopedics',
+    phone: '9876543212',
+    email: 'dr.smith@cliniccare.com',
+    available: true,
+    about: 'Dr. Smith specializes in joint replacement surgery and sports medicine. He has helped thousands of patients regain mobility and return to active lifestyles.',
+    languages: ['English', 'Hindi']
+  },
+  { 
+    id: 4, 
+    name: 'Dr. Patel', 
+    specialization: 'Pediatrics', 
+    experience: '8 years',
+    education: 'MBBS, MD Pediatrics',
+    phone: '9876543213',
+    email: 'dr.patel@cliniccare.com',
+    available: true,
+    about: 'Dr. Patel is a compassionate pediatrician who provides comprehensive care for children from birth to adolescence. She specializes in child development and immunizations.',
+    languages: ['English', 'Hindi', 'Gujarati']
+  },
+  { 
+    id: 5, 
+    name: 'Dr. Kumar', 
+    specialization: 'Dermatology', 
+    experience: '6 years',
+    education: 'MBBS, MD Dermatology',
+    phone: '9876543214',
+    email: 'dr.kumar@cliniccare.com',
+    available: true,
+    about: 'Dr. Kumar is a skilled dermatologist with expertise in medical and cosmetic dermatology. He provides advanced treatments for skin conditions and aesthetic procedures.',
+    languages: ['English', 'Hindi', 'Tamil']
+  }
 ];
 
 export default doctorData;

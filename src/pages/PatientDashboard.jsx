@@ -57,28 +57,28 @@ function PatientDashboard() {
   };
 
   const getBMICategory = (bmi) => {
-    if (bmi < 18.5) return { category: 'Underweight', color: 'text-blue-600' };
-    if (bmi < 25) return { category: 'Normal', color: 'text-green-600' };
-    if (bmi < 30) return { category: 'Overweight', color: 'text-yellow-600' };
-    return { category: 'Obese', color: 'text-red-600' };
+    if (bmi < 18.5) return { category: 'Underweight', color: 'text-info' };
+    if (bmi < 25) return { category: 'Normal', color: 'text-success' };
+    if (bmi < 30) return { category: 'Overweight', color: 'text-warning' };
+    return { category: 'Obese', color: 'text-error' };
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
   }
 
   if (!patient) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Patient Not Found</h2>
+          <h2 className="text-2xl font-bold text-base-content mb-4">Patient Not Found</h2>
           <button
             onClick={() => navigate('/login')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="btn btn-primary"
           >
             Back to Login
           </button>
@@ -102,7 +102,7 @@ function PatientDashboard() {
           <div className="flex items-center py-6">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-primary-content/20 rounded-full flex items-center justify-center mr-4">
-                <span className="text-primary-content text-2xl">👤</span>
+                <span className="text-primary-content text-2xl">ID</span>
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-primary-content">Patient Dashboard</h1>
@@ -120,7 +120,7 @@ function PatientDashboard() {
             <div className="card-body">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                  <span className="text-primary">🆔</span>
+                  <span className="text-primary text-sm font-bold">ID</span>
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-base-content/60">Patient ID</p>
@@ -133,8 +133,8 @@ function PatientDashboard() {
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body">
               <div className="flex items-center">
-                <div className="w-8 h-8 bg-success/20 rounded-full flex items-center justify-center">
-                  <span className="text-success">🩸</span>
+                <div className="w-8 h-8 bg-error/20 rounded-full flex items-center justify-center">
+                  <span className="text-error text-sm font-bold">B+</span>
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-base-content/60">Blood Type</p>
@@ -148,7 +148,7 @@ function PatientDashboard() {
             <div className="card-body">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center">
-                  <span className="text-secondary">🎂</span>
+                  <span className="text-secondary text-sm font-bold">AGE</span>
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-base-content/60">Age</p>
@@ -162,11 +162,11 @@ function PatientDashboard() {
             <div className="card-body">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
-                  <span className="text-accent">⚖️</span>
+                  <span className="text-accent text-sm font-bold">BMI</span>
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-base-content/60">BMI</p>
-                  <p className={`text-lg font-semibold ${bmiInfo ? (bmiInfo.category === 'Normal' ? 'text-success' : 'text-warning') : 'text-base-content'}`}>
+                  <p className={`text-lg font-semibold ${bmiInfo ? bmiInfo.color : 'text-base-content'}`}>
                     {bmi ? `${bmi} (${bmiInfo.category})` : 'Not calculated'}
                   </p>
                 </div>
@@ -420,9 +420,9 @@ function PatientDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <button
                 onClick={() => navigate('/book-appointment')}
-                className="btn btn-outline"
+                className="btn btn-primary"
               >
-                📅 Book Appointment
+                Book Appointment
               </button>
               <button
                 onClick={() => navigate('/appointments')}

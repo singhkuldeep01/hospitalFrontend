@@ -1,72 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import doctorData from '../data/doctorData';
 
 function DoctorsPage() {
   const navigate = useNavigate();
-
-  // Available doctors with detailed information
-  const doctors = [
-    { 
-      id: 1, 
-      name: 'Dr. Sharma', 
-      specialization: 'General Medicine', 
-      experience: '15 years',
-      education: 'MBBS, MD Internal Medicine',
-      phone: '9876543210',
-      email: 'dr.sharma@cliniccare.com',
-      available: true,
-      about: 'Dr. Sharma is an experienced general physician with expertise in preventive care and chronic disease management. He believes in personalized treatment and patient education.',
-      languages: ['English', 'Hindi', 'Marathi']
-    },
-    { 
-      id: 2, 
-      name: 'Dr. Mehta', 
-      specialization: 'Cardiology', 
-      experience: '12 years',
-      education: 'MBBS, MD Cardiology, DM',
-      phone: '9876543211',
-      email: 'dr.mehta@cliniccare.com',
-      available: true,
-      about: 'Dr. Mehta is a renowned cardiologist specializing in interventional cardiology and heart disease prevention. She has performed over 1000 successful cardiac procedures.',
-      languages: ['English', 'Hindi', 'Gujarati']
-    },
-    { 
-      id: 3, 
-      name: 'Dr. Smith', 
-      specialization: 'Orthopedics', 
-      experience: '10 years',
-      education: 'MBBS, MS Orthopedics',
-      phone: '9876543212',
-      email: 'dr.smith@cliniccare.com',
-      available: true,
-      about: 'Dr. Smith specializes in joint replacement surgery and sports medicine. He has helped thousands of patients regain mobility and return to active lifestyles.',
-      languages: ['English', 'Hindi']
-    },
-    { 
-      id: 4, 
-      name: 'Dr. Patel', 
-      specialization: 'Pediatrics', 
-      experience: '8 years',
-      education: 'MBBS, MD Pediatrics',
-      phone: '9876543213',
-      email: 'dr.patel@cliniccare.com',
-      available: true,
-      about: 'Dr. Patel is a compassionate pediatrician who provides comprehensive care for children from birth to adolescence. She specializes in child development and immunizations.',
-      languages: ['English', 'Hindi', 'Gujarati']
-    },
-    { 
-      id: 5, 
-      name: 'Dr. Kumar', 
-      specialization: 'Dermatology', 
-      experience: '6 years',
-      education: 'MBBS, MD Dermatology',
-      phone: '9876543214',
-      email: 'dr.kumar@cliniccare.com',
-      available: true,
-      about: 'Dr. Kumar is a skilled dermatologist with expertise in medical and cosmetic dermatology. He provides advanced treatments for skin conditions and aesthetic procedures.',
-      languages: ['English', 'Hindi', 'Tamil']
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-base-200 py-12 px-4">
@@ -83,7 +20,7 @@ function DoctorsPage() {
 
         {/* Doctors Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {doctors.map((doctor) => (
+          {doctorData.map((doctor) => (
             <div key={doctor.id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <div className="card-body">
                 {/* Doctor Header */}
@@ -223,3 +160,4 @@ function DoctorsPage() {
 }
 
 export default DoctorsPage;
+  

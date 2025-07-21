@@ -156,12 +156,14 @@ function HomePage() {
             who trust ClinicCare for their medical needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => navigate('/book-appointment')}
-              className="btn btn-primary"
-            >
-              Book Appointment
-            </button>
+            {isLoggedIn && (
+              <button
+                onClick={() => navigate('/book-appointment')}
+                className="btn btn-primary"
+              >
+                Book Appointment
+              </button>
+            )}
             <button
               onClick={() => navigate('/contact')}
               className="btn btn-outline"
