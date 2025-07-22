@@ -6,6 +6,7 @@ function EmergencyPage() {
   const navigate = useNavigate();
   const { isLoggedIn, user } = useAuthStore();
   const [isCallInitiated, setIsCallInitiated] = useState(false);
+  const [emergencyType, setEmergencyType] = useState('');
 
   const emergencyContacts = [
     { name: 'ClinicCare Emergency', number: '108', type: 'Primary' },
@@ -48,12 +49,25 @@ function EmergencyPage() {
     }
   ];
 
+  const emergencyTypes = [
+    { value: 'cardiac', label: 'Heart Attack', icon: '💔', color: 'bg-red-100' },
+    { value: 'trauma', label: 'Injury/Trauma', icon: '🚑', color: 'bg-orange-100' },
+    { value: 'breathing', label: 'Breathing', icon: '🫁', color: 'bg-blue-100' },
+    { value: 'stroke', label: 'Stroke', icon: '🧠', color: 'bg-purple-100' },
+  ];
+
   const handleEmergencyCall = (number) => {
-    setIsCallInitiated(true);
-    setTimeout(() => {
+    try {
+      setIsCallInitiated(true);
+      setTimeout(() => {
+        setIsCallInitiated(false);
+        alert(`Emergency call to ${number} would be initiated in a real application`);
+      }, 2000);
+    } catch (error) {
+      console.error('Emergency call error:', error);
       setIsCallInitiated(false);
-      alert(`Emergency call to ${number} would be initiated in a real application`);
-    }, 2000);
+      alert('Failed to initiate emergency call. Please try again or dial manually.');
+    }
   };
 
   return (
@@ -81,21 +95,19 @@ function EmergencyPage() {
         {/* Quick Emergency Call */}
         <div className="card bg-base-100 shadow-xl mb-8 border-l-4 border-error">
           <div className="card-body">
-            <h2 className="card-title text-2xl text-base-content mb-4">
-              Quick Emergency Action
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <h2 className="card-title text-2xl text-base-content mb-6">Emergency Contacts</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {emergencyContacts.map((contact, index) => (
                 <button
-                  key={idx}
+                  key={index}
                   onClick={() => handleEmergencyCall(contact.number)}
                   disabled={isCallInitiated}
-                  className={`btn btn-outline btn-error ${isCallInitiated ? 'btn-disabled' : ''}`}
+                  className="card bg-base-200 hover:bg-base-300 transition-colors"
                 >
-                  <div className="text-center">
-                    <p className="font-semibold">{contact.name}</p>
-                    <p className="text-2xl font-bold">{contact.number}</p>
-                    <p className="text-sm opacity-70">{contact.type}</p>
+                  <div className="card-body p-6 text-center">
+                    <h3 className="font-medium text-base-content/80">{contact.name}</h3>
+                    <p className="text-4xl font-black tabular-nums my-2">{contact.number}</p>
+                    <p className="text-sm text-base-content/60">{contact.type}</p>
                   </div>
                 </button>
               ))}
@@ -112,24 +124,23 @@ function EmergencyPage() {
         {/* Emergency Type Selection */}
         <div className="card bg-base-100 shadow-xl mb-8">
           <div className="card-body p-6">
-            <h2 className="text-2xl font-bold text-base-content mb-6 flex items-center">
-              <span className="text-3xl mr-3">🎯</span>
+            <h2 className="text-2xl font-bold text-base-content mb-6">
               Select Emergency Type
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {emergencyTypes.map((type, index) => (
+              {emergencyTypes.map((type) => (
                 <button
-                  key={index}
+                  key={type.value}
                   onClick={() => setEmergencyType(type.value)}
-                  className={`btn btn-lg h-auto py-4 ${
+                  className={`btn h-auto py-4 ${
                     emergencyType === type.value
-                    ? 'btn-primary shadow-lg'
-                    : 'btn-ghost hover:bg-base-200'
+                      ? 'btn-primary shadow-lg'
+                      : 'btn-ghost hover:bg-base-200'
                   }`}
                 >
                   <div className="text-center">
                     <span className="text-3xl mb-2">{type.icon}</span>
-                    <p className="font-bold">{type.label}</p>
+                    <p className="font-bold mt-2">{type.label}</p>
                   </div>
                 </button>
               ))}
@@ -262,4 +273,3 @@ function EmergencyPage() {
 }
 
 export default EmergencyPage;
-        

@@ -143,22 +143,26 @@ function HomePage() {
       <div className="py-24 bg-gradient-to-r from-primary via-secondary to-accent text-primary-content relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/5"></div>
         <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="stats stats-vertical lg:stats-horizontal shadow-2xl bg-base-100/20 backdrop-blur">
-            <div className="stat">
-              <div className="stat-value">25+</div>
-              <div className="stat-desc text-primary-content/70">Years of Service</div>
+          <div className="stats stats-vertical lg:stats-horizontal shadow-2xl bg-base-100/20 backdrop-blur w-full">
+            <div className="stat text-center px-8">
+              <div className="stat-title text-base-100 opacity-80 font-medium">Years of Service</div>
+              <div className="stat-value text-5xl my-2 tabular-nums">25+</div>
+              <div className="stat-desc text-base-100 text-sm">Since 1998</div>
             </div>
-            <div className="stat">
-              <div className="stat-value">50+</div>
-              <div className="stat-desc text-primary-content/70">Expert Doctors</div>
+            <div className="stat text-center px-8">
+              <div className="stat-title text-base-100 opacity-80 font-medium">Expert Doctors</div>
+              <div className="stat-value text-5xl my-2 tabular-nums">50+</div>
+              <div className="stat-desc text-base-100 text-sm">Specialists & GPs</div>
             </div>
-            <div className="stat">
-              <div className="stat-value">10K+</div>
-              <div className="stat-desc text-primary-content/70">Happy Patients</div>
+            <div className="stat text-center px-8">
+              <div className="stat-title text-base-100 opacity-80 font-medium">Happy Patients</div>
+              <div className="stat-value text-5xl my-2 tabular-nums">10K+</div>
+              <div className="stat-desc text-base-100 text-sm">And Growing</div>
             </div>
-            <div className="stat">
-              <div className="stat-value">24/7</div>
-              <div className="stat-desc text-primary-content/70">Emergency Care</div>
+            <div className="stat text-center px-8">
+              <div className="stat-title text-base-100 opacity-80 font-medium">Availability</div>
+              <div className="stat-value text-5xl my-2 font-mono">24/7</div>
+              <div className="stat-desc text-base-100 text-sm">Emergency Care</div>
             </div>
           </div>
         </div>

@@ -7,23 +7,29 @@ function RegisterPatient() {
   const navigate = useNavigate();
   const { addPatient } = usePatientStore();
   const { login } = useAuthStore();
-  
-  const [patientData, setPatientData] = useState({
+
+  const [formData, setFormData] = useState({
     name: '',
     age: '',
     gender: '',
     height: '',
     weight: '',
     bloodType: '',
-    phone: '',
-    email: '',
-    emergencyContactName: '',
-    emergencyContactRelation: '',
-    emergencyContactPhone: '',
-    allergies: '',
-    medicalHistory: ''
+    contactInfo: {
+      phone: '',
+      email: ''
+    },
+    emergencyContact: {
+      name: '',
+      relationship: '',
+      phone: ''
+    },
+    allergies: [],
+    medicalHistory: []
   });
 
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [allergyInput, setAllergyInput] = useState('');
   const [medicalHistoryInput, setMedicalHistoryInput] = useState('');
 
@@ -33,67 +39,96 @@ function RegisterPatient() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setPatientData(prev => ({
-      ...prev,
-      [name]: value
-    }));
     
-    // Clear errors when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setFormData(prev => ({
         ...prev,
-        [name]: ''
+        [parent]: {
+          ...prev[parent],
+          [child]: value
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
       }));
     }
+  };
+
+  const addAllergy = () => {
+    if (allergyInput.trim() && !formData.allergies.includes(allergyInput.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        allergies: [...prev.allergies, allergyInput.trim()]
+      }));
+      setAllergyInput('');
+    }
+  };
+
+  const removeAllergy = (allergy) => {
+    setFormData(prev => ({
+      ...prev,
+      allergies: prev.allergies.filter(a => a !== allergy)
+    }));
+  };
+
+  const addMedicalHistory = () => {
+    if (medicalHistoryInput.trim() && !formData.medicalHistory.includes(medicalHistoryInput.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        medicalHistory: [...prev.medicalHistory, medicalHistoryInput.trim()]
+      }));
+      setMedicalHistoryInput('');
+    }
+  };
+
+  const removeMedicalHistory = (condition) => {
+    setFormData(prev => ({
+      ...prev,
+      medicalHistory: prev.medicalHistory.filter(m => m !== condition)
+    }));
   };
 
   const validateForm = () => {
     const newErrors = {};
     
-    if (!patientData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!patientData.age || patientData.age < 1 || patientData.age > 120) {
-      newErrors.age = 'Please enter a valid age';
-    }
-    
-    if (!patientData.gender) {
-      newErrors.gender = 'Please select gender';
-    }
-    
-    if (!patientData.phone || !/^\d{10}$/.test(patientData.phone.replace(/\D/g, ''))) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number';
-    }
-    
-    if (patientData.email && !/\S+@\S+\.\S+/.test(patientData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
+    if (!formData.name?.trim()) newErrors.name = 'Name is required';
+    if (!formData.age) newErrors.age = 'Age is required';
+    if (!formData.gender) newErrors.gender = 'Gender is required';
+    if (!formData.contactInfo.phone?.trim()) newErrors.phone = 'Phone number is required';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!validateForm()) {
       return;
     }
 
-    // Convert age, height, weight to numbers
-    const patientData = {
-      ...formData,
-      age: parseInt(formData.age),
-      height: formData.height ? parseInt(formData.height) : '',
-      weight: formData.weight ? parseInt(formData.weight) : '',
-    };
+    try {
+      setIsLoading(true);
+      
+      const patientData = {
+        ...formData,
+        age: parseInt(formData.age),
+        height: formData.height ? parseInt(formData.height) : null,
+        weight: formData.weight ? parseInt(formData.weight) : null,
+      };
 
-    // Add patient to store
-    addPatient(patientData);
-    
-    alert('Patient registered successfully!');
-    navigate('/patients');
+      await addPatient(patientData);
+      alert('Patient registered successfully!');
+      navigate('/patient-dashboard');
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Failed to register patient. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
