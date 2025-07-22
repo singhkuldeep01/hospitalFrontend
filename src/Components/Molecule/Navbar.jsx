@@ -7,7 +7,7 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn, user, logout } = useAuthStore();
+  const { isLoggedIn, user, logout, isDoctor, isPatient } = useAuthStore();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,11 +24,31 @@ function Navbar() {
 
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'Patients', path: '/patient-dashboard' },
-    { name: 'Doctors', path: '/doctors' },
-    { name: 'Appointments', path: '/appointments' },
     { name: 'Contact', path: '/contact' }
   ];
+
+  // Add user-specific navigation items
+  const getUserSpecificNavItems = () => {
+    if (isPatient()) {
+      return [
+        { name: 'Home', path: '/' },
+        { name: 'Dashboard', path: '/patient-dashboard' },
+        { name: 'Book Appointment', path: '/book-appointment' },
+        { name: 'Appointments', path: '/appointments' },
+        { name: 'Prescriptions', path: '/prescriptions' },
+        { name: 'Contact', path: '/contact' }
+      ];
+    } else if (isDoctor()) {
+      return [
+        { name: 'Home', path: '/' },
+        { name: 'Dashboard', path: '/doctor-dashboard' },
+        { name: 'Contact', path: '/contact' }
+      ];
+    }
+    return navItems;
+  };
+
+  const displayNavItems = getUserSpecificNavItems();
 
   return (
     <div className="navbar bg-base-100 shadow-lg sticky top-0 z-50">
@@ -40,7 +60,7 @@ function Navbar() {
             </svg>
           </label>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            {navItems.map((item) => (
+            {displayNavItems.map((item) => (
               <li key={item.name}>
                 <Link
                   to={item.path}
@@ -67,7 +87,7 @@ function Navbar() {
       
       <div className="navbar-center hidden md:flex">
         <ul className="menu menu-horizontal px-1">
-          {navItems.map((item) => (
+          {displayNavItems.map((item) => (
             <li key={item.name}>
               <Link
                 to={item.path}
@@ -89,15 +109,23 @@ function Navbar() {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary text-primary-content rounded-full flex items-center justify-center">
+                <div className={`w-8 h-8 ${isDoctor() ? 'bg-secondary' : 'bg-primary'} text-primary-content rounded-full flex items-center justify-center`}>
                   <span className="text-xs font-medium">{user?.name?.charAt(0)}</span>
                 </div>
                 <span className="hidden md:inline">{user?.name}</span>
               </div>
             </label>
             <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><Link to="/patient-dashboard">Dashboard</Link></li>
-              <li><Link to="/appointments">My Appointments</Link></li>
+              {isPatient() && (
+                <>
+                  <li><Link to="/patient-dashboard">Dashboard</Link></li>
+                  <li><Link to="/appointments">My Appointments</Link></li>
+                  <li><Link to="/prescriptions">My Prescriptions</Link></li>
+                </>
+              )}
+              {isDoctor() && (
+                <li><Link to="/doctor-dashboard">Doctor Dashboard</Link></li>
+              )}
               <li><button onClick={handleLogout} className="text-error">Logout</button></li>
             </ul>
           </div>

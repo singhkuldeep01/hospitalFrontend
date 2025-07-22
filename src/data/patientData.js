@@ -43,9 +43,12 @@ const patientData = [
         prescription: {
             medications: [
                 { name: "Salbutamol Inhaler", dosage: "2 puffs", frequency: "As needed" },
-                { name: "Montair LC", dosage: "10mg", frequency: "Once daily" }
+                { name: "Montair LC", dosage: "10mg", frequency: "Once daily" },
+                { name: "Budesonide Inhaler", dosage: "1 puff", frequency: "Twice daily" },
+                { name: "Cetirizine", dosage: "10mg", frequency: "Once daily" },
+                { name: "Prednisolone", dosage: "10mg", frequency: "As prescribed during flare-ups" }
             ],
-            notes: "Avoid allergens. Use inhaler during attacks."
+            notes: "Avoid allergens. Use inhaler during attacks. Take cetirizine for allergy management."
         }
     },
     {

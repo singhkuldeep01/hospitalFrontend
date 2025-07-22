@@ -7,30 +7,44 @@ const useAuthStore = create(
       // State
       isLoggedIn: false,
       user: null,
+      userType: null, // 'patient' or 'doctor'
       
       // Actions
       login: (userData) => {
         set({
           isLoggedIn: true,
-          user: userData
+          user: userData,
+          userType: 'patient'
+        });
+      },
+      
+      doctorLogin: (doctorData) => {
+        set({
+          isLoggedIn: true,
+          user: doctorData,
+          userType: 'doctor'
         });
       },
       
       logout: () => {
         set({
           isLoggedIn: false,
-          user: null
+          user: null,
+          userType: null
         });
       },
       
-      // Helper to check if user is authenticated
+      // Helper functions
       isAuthenticated: () => get().isLoggedIn,
+      isDoctor: () => get().userType === 'doctor',
+      isPatient: () => get().userType === 'patient',
     }),
     {
       name: 'auth-storage', // localStorage key
       partialize: (state) => ({
         isLoggedIn: state.isLoggedIn,
-        user: state.user
+        user: state.user,
+        userType: state.userType
       })
     }
   )

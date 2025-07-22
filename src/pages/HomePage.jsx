@@ -28,12 +28,20 @@ function HomePage() {
                   Go to Dashboard
                 </button>
               ) : (
-                <button
-                  onClick={() => navigate('/register')}
-                  className="btn btn-primary"
-                >
-                  Register New Patient
-                </button>
+                <>
+                  <button
+                    onClick={() => navigate('/register')}
+                    className="btn btn-primary"
+                  >
+                    Register New Patient
+                  </button>
+                  <button
+                    onClick={() => navigate('/doctor-login')}
+                    className="btn btn-secondary"
+                  >
+                    Doctor Login
+                  </button>
+                </>
               )}   
             </div>
           </div>
@@ -73,6 +81,14 @@ function HomePage() {
                   Our team of experienced specialists and general practitioners 
                   are committed to providing exceptional healthcare.
                 </p>
+                <div className="card-actions justify-center mt-4">
+                  <button
+                    onClick={() => navigate('/doctors')}
+                    className="btn btn-secondary btn-sm"
+                  >
+                    Meet Our Doctors
+                  </button>
+                </div>
               </div>
             </div>
             <div className="card bg-base-200 shadow-xl">
